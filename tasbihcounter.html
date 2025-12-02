@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Deen – Tasbih Counter</title>
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, #03110f, #020b16 60%, #001f18);
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100vh;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 50%;
+        background: rgba(0,255,180,0.08);
+        border: 1px solid rgba(0,255,180,0.2);
+        backdrop-filter: blur(6px);
+        transition: 0.3s;
+    }
+    .back-btn:hover {
+        transform: scale(1.1);
+        background: rgba(0,255,180,0.2);
+    }
+
+    .counter-display {
+        margin-top: 130px;
+        font-size: 110px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        transition: transform 0.15s ease-out;
+        text-shadow: 0 0 20px rgba(0,255,150,0.4);
+        position: relative;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pulse {
+        animation: pulseAnim 0.18s ease-out;
+    }
+
+    @keyframes pulseAnim {
+        0% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.25); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 20px;
+    }
+
+    button {
+        padding: 18px 30px;
+        font-size: 20px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        background: rgba(0,255,150,0.12);
+        border: 1px solid rgba(0,255,150,0.25);
+        color: white;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: rgba(0,255,150,0.28);
+        transform: scale(1.07);
+    }
+
+    .themes {
+        position: absolute;
+        bottom: 20px;
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 10px 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .theme-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid white;
+    }
+</style>
+</head>
+<body>
+
+<div class="back-btn" onclick="goBack()">⟵</div>
+
+<div id="counterNumber" class="counter-display">0</div>
+
+<div class="actions">
+    <button onclick="changeCount(-1)">−</button>
+    <button onclick="resetCount()">Reset</button>
+    <button onclick="changeCount(1)">+</button>
+</div>
+
+<div class="themes">
+    <div class="theme-circle" style="background:#00e89a;" onclick="setTheme('#00e89a')"></div>
+    <div class="theme-circle" style="background:#00bcd4;" onclick="setTheme('#00bcd4')"></div>
+    <div class="theme-circle" style="background:#4caf50;" onclick="setTheme('#4caf50')"></div>
+    <div class="theme-circle" style="background:#9c27b0;" onclick="setTheme('#9c27b0')"></div>
+    <div class="theme-circle" style="background:#ff9800;" onclick="setTheme('#ff9800')"></div>
+    <div class="theme-circle" style="background:#e91e63;" onclick="setTheme('#e91e63')"></div>
+    <div class="theme-circle" style="background:#03a9f4;" onclick="setTheme('#03a9f4')"></div>
+    <div class="theme-circle" style="background:#8bc34a;" onclick="setTheme('#8bc34a')"></div>
+    <div class="theme-circle" style="background:#ffc107;" onclick="setTheme('#ffc107')"></div>
+    <div class="theme-circle" style="background:#ff5722;" onclick="setTheme('#ff5722')"></div>
+</div>
+
+<script>
+let count = 0;
+
+function updateDisplay() {
+    const counter = document.getElementById("counterNumber");
+    counter.innerText = count;
+    counter.classList.remove("pulse");
+    void counter.offsetWidth;
+    counter.classList.add("pulse");
+}
+
+function changeCount(value) {
+    count += value;
+    if (count < 0) count = 0;
+    updateDisplay();
+}
+
+function resetCount() {
+    count = 0;
+    updateDisplay();
+}
+
+function setTheme(color) {
+    document.querySelector('.counter-display').style.textShadow = `0 0 25px ${color}`;
+    document.querySelectorAll('button').forEach(btn => {
+        btn.style.background = color + "22";
+        btn.style.borderColor = color;
+    });
+}
+
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
